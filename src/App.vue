@@ -1,0 +1,306 @@
+<template>
+  <x-datetime-picker
+    :language="language"
+    :use-h-m-s="useHMS"
+    :popover-h-m-s="popoverHMS"
+    :datetime="datetime"
+    :limit="limit"
+    :is-range="isRange"
+    :choose-span="chooseSpan"
+    :is-week-begin-from-sunday="isWeekBeginFromSunday"
+    :is-hide-year-month-arrow="isHideYearMonthArrow"
+    :utc="utc"
+    @handleDatetime="handleDatetime"
+  />
+  <div class="selected"> {{ selected }}</div>
+  <div class="operation">
+    <div>
+      <select @change="handleUTC">
+        <option :selected="item === utc" :value="item" v-for="(item) in config.utcData" :key="item">
+          UTC{{ item >= 0 ? `+${item}` : item }}
+        </option>
+      </select>
+    </div>
+    <div class="arrow">
+      <button
+        :key="`wa-${index}`"
+        :class="{'choose': (item.value === isHideYearMonthArrow)}"
+        @click="setHideYearMonthArrow(item.value)"
+        v-for="(item, index) in config.arrowHide"
+      >
+        {{ item.name }}
+      </button>
+    </div>
+    <div class="weekBegin">
+      <button
+        :key="`wb-${index}`"
+        :class="{'choose': (item.value === 'su' && isWeekBeginFromSunday) || (item.value === 'mo' && !isWeekBeginFromSunday)}"
+        @click="setWeekBegin(item.value)"
+        v-for="(item, index) in config.weekBegin"
+      >
+        {{ item.name }}
+      </button>
+    </div>
+    <div class="range">
+      <button
+        :key="`range-${index}`"
+        :class="{'choose': item.value === isRange}"
+        @click="setRange(item.value)"
+        v-for="(item, index) in config.range"
+      >
+        {{ item.name }}
+      </button>
+    </div>
+    <div class="language">
+      <button
+        :key="item.value"
+        :class="{'choose': item.value === language}"
+        @click="setLanguage(item.value)"
+        v-for="(item) in config.lang"
+      >
+        {{ item.name }}
+      </button>
+    </div>
+    <div class="time">
+      <button
+        :key="item.value"
+        :class="{'choose': item.value === useHMS}"
+        @click="setTime(item.value)"
+        v-for="(item) in config.time"
+      >
+        {{ item.name }}
+      </button>
+    </div>
+    <div class="howToChooseTime">
+      <button
+        :key="item.value"
+        :class="{'choose': item.value === popoverHMS}"
+        @click="setHowToChooseTime(item.value)"
+        v-for="(item) in config.howToChooseTime"
+      >
+        {{ item.name }}
+      </button>
+    </div>
+    <div class="span">
+      <button
+        :key="item.value"
+        :class="{'choose': item.value === chooseSpan}"
+        @click="setSpan(item.value)"
+        v-for="(item) in config.span"
+      >
+        {{ item.name }}
+      </button>
+    </div>
+  </div>
+</template>
+
+<script>
+import XDatetimePicker from '../packages/XDatetime/src/index.vue';
+import moment from 'dayjs';
+
+export default {
+  name: 'App',
+  components: {
+    XDatetimePicker,
+  },
+  created() {
+    // this.initDatetime();
+  },
+  data() {
+    return {
+      config: {
+        utcData: this.getUTCData(),
+        arrowHide: [
+          {
+            name: '隐藏年月切换箭头',
+            value: true
+          },
+          {
+            name: '不隐藏年月切换箭头',
+            value: false
+          }
+        ],
+        howToChooseTime: [
+          {
+            name: '弹层设置时分秒',
+            value: true
+          },
+          {
+            name: '平铺设置时分秒',
+            value: false
+          }
+        ],
+        weekBegin: [
+          {
+            name: '星期日开始',
+            value: 'su'
+          },
+          {
+            name: '星期一开始',
+            value: 'mo'
+          }
+        ],
+        range: [
+          {
+            name: '时间点',
+            value: false
+          },
+          {
+            name: '时间段',
+            value: true
+          },
+        ],
+        lang: [
+          {
+            name: '中文',
+            value: 'zh-cn'
+          },
+          {
+            name: '英文',
+            value: 'en'
+          },
+          {
+            name: '日文',
+            value: 'ja'
+          },
+          {
+            name: '韩文',
+            value: 'ko'
+          },
+        ],
+        time: [
+          {
+            name: '按天',
+            value: ''
+          },
+          {
+            name: '按小时',
+            value: 'hour'
+          },
+          {
+            name: '按分钟',
+            value: 'minute'
+          },
+          {
+            name: '按秒',
+            value: 'second'
+          },
+        ],
+        span: [
+          {
+            name: '任意',
+            value: ''
+          },
+          {
+            name: '周',
+            value: 'week'
+          },
+          {
+            name: '月',
+            value: 'month'
+          },
+          {
+            name: '7天',
+            value: 7
+          },
+        ]
+      },
+      useHMS: 'second',
+      popoverHMS: false,
+      datetime: '',
+      isRange: true,
+      language: 'zh-cn',
+      limit: {
+        begin: -180,
+        end: 'now',
+      },
+      chooseSpan: '',
+      isWeekBeginFromSunday: true,
+      selected: this.datetime,
+      isHideYearMonthArrow: false,
+      utc: moment().utcOffset() / 60,
+    };
+  },
+  methods: {
+    getUTCData() {
+      const backData = [];
+      for (let i = -16; i <= 16; i += 1) {
+        backData.push(i);
+      }
+      return backData;
+    },
+    initDatetime() {
+      let dateFormat;
+      if (this.useHMS) {
+        dateFormat = 'YYYY-MM-DD HH:mm:ss';
+      } else {
+        dateFormat = 'YYYY-MM-DD';
+      }
+      if (this.isRange) {
+        this.datetime = [moment().format(dateFormat), moment().format(dateFormat)];
+      } else {
+        this.datetime = moment().format(dateFormat);
+      }
+      this.selected = this.datetime;
+    },
+    handleDatetime(emitData) {
+      this.selected = emitData;
+    },
+    setLanguage(lan) {
+      this.language = lan;
+    },
+    setTime(time) {
+      this.useHMS = time;
+      this.initDatetime();
+    },
+    setSpan(span) {
+      this.chooseSpan = span;
+    },
+    setRange(range) {
+      this.isRange = range;
+      this.initDatetime();
+    },
+    setWeekBegin(wb) {
+      if (wb === 'su') {
+        this.isWeekBeginFromSunday = true;
+      } else {
+        this.isWeekBeginFromSunday = false;
+      }
+    },
+    setHowToChooseTime(isPopover) {
+      this.popoverHMS = isPopover;
+    },
+    setHideYearMonthArrow(status) {
+      this.isHideYearMonthArrow = status;
+    },
+    handleUTC(event) {
+      this.utc = parseInt(event.target.value, 10);
+    }
+  }
+}
+</script>
+
+<style lang="less">
+.selected {
+  font-size: 12px;
+  padding-top: 30px;
+  height: 50px;
+  line-height: 50px;
+}
+.operation {
+  padding-top: 20px;
+  >div {
+    margin-bottom: 10px;
+    >button {
+      margin-right: 5px;
+      border: 0;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .choose {
+      background-color: #f96656;
+      color: white;
+    }
+  }
+}
+</style>
