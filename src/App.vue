@@ -95,16 +95,14 @@
 </template>
 
 <script>
-import XDatetimePicker from '../packages/XDatetime/src/index.vue';
+import XDatetimePicker from '../dist/x-datetime-picker.es';
+import '../dist/style.css';
 import moment from 'dayjs';
 
 export default {
   name: 'App',
   components: {
     XDatetimePicker,
-  },
-  created() {
-    // this.initDatetime();
   },
   data() {
     return {

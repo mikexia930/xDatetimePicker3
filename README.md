@@ -8,7 +8,7 @@
 
 ### 版本
 ***
-* v1.0.2
+* v1.0.5
 
 ### 基于
 ***
@@ -17,15 +17,6 @@
 
 ### 安装
 ***
-````
-npm install dayjs
-npm install x-datetimepicker-vue3
-````
-
-### 使用
-***
-**全局引入**
-
 在main.js中引入
 ````
 import xDatetimePicker from 'x-datetimepicker-vue3';
@@ -35,6 +26,16 @@ vue.use(xDatetimePicker);
 ```
 import { xDatetimePicker } from 'x-datetimepicker-vue3';
 ```
+
+### 使用
+***
+**全局引入**
+
+在main.js中引入
+````
+import XDatetimePicker from 'x-datetime-picker';
+import 'x-datetime-picker/dist/style.css';
+````
 
 **组件中使用**
 ````
@@ -171,7 +172,7 @@ handleDatetime(emitData) {
 |.x-minute|时分秒的显示区域|
 
 ````
-/deep/ .x-datetime {
+:deep(.x-datetime) {
    ....
 }
 ````

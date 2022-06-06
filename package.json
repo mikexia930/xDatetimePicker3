@@ -1,6 +1,6 @@
 {
   "name": "x-datetimepicker-vue3",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "keywords": [
     "datetime picker",
     "vue3 datetime picker"
@@ -8,13 +8,26 @@
   "description": "A datetime picker with vue3",
   "private": false,
   "license": "MIT",
-  "main": "./dist/x-datetimepicker-vue3.umd.js",
-  "module": "./dist/x-datetimepicker-vue3.es.js",
-  "types": "x-datetimepicker-vue3.d.ts",
+  "main": "./dist/x-datetime-picker.umd.js",
+  "module": "./dist/x-datetime-picker.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/x-datetime-picker.es.js",
+      "require": "./dist/x-datetime-picker.umd.js"
+    },
+    "./dist/style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
+    }
+  },
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview --port 5050"
+    "preview": "vite preview --port 5050",
+    "lib": "vue-cli-service build --target lib --name xdatetimepicker --dest lib packages/index.js"
   },
   "peerDependencies": {
     "dayjs": "^1.10.8",
