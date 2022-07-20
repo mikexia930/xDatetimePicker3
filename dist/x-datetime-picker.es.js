@@ -1744,7 +1744,7 @@ function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
     }, 8, ["is-range", "range-position", "lang", "useHMS", "datetime", "year", "month", "date", "hour", "minute", "second", "limit", "isWeekBeginFromSunday", "is-hide-year-month-arrow", "onHandleDate"]))
   ]);
 }
-var XSingle = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render$1], ["__scopeId", "data-v-58c682a9"]]);
+var XSingle = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render$1], ["__scopeId", "data-v-368fb2ca"]]);
 var zhCn = { exports: {} };
 (function(module, exports) {
   !function(e, _) {
@@ -2115,7 +2115,7 @@ const _sfc_main = {
       if (this.isRange) {
         if (!Array.isArray(datetime)) {
           if (datetime && this.checkDatetimeIsValid(datetime)) {
-            useDatetime = moment(useDatetime);
+            useDatetime = moment(datetime);
           } else {
             useDatetime = this.getUTCMomentIns();
           }
@@ -2124,7 +2124,7 @@ const _sfc_main = {
         } else {
           if (datetime.length !== 2) {
             if (datetime.length === 1 && this.checkDatetimeIsValid(datetime[0])) {
-              useDatetime = moment(useDatetime);
+              useDatetime = moment(datetime[0]);
             } else {
               useDatetime = this.getUTCMomentIns();
             }
@@ -2148,7 +2148,7 @@ const _sfc_main = {
         this.endDatetime = this.formatHMSDatetime("end", this.endDatetime);
       } else {
         if (datetime && this.checkDatetimeIsValid(datetime)) {
-          useDatetime = moment(useDatetime);
+          useDatetime = moment(datetime);
         } else {
           useDatetime = this.getUTCMomentIns();
         }
@@ -2439,5 +2439,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     ], 64))
   ]);
 }
-var XDatetimePicker = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-ce74a2a0"]]);
+var XDatetimePicker = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-493ecffd"]]);
 export { XDatetimePicker as default };

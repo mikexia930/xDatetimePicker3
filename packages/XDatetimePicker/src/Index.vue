@@ -289,7 +289,7 @@ export default {
         // 非数组，则自动补充结束时间
         if (!Array.isArray(datetime)) {
           if (datetime && this.checkDatetimeIsValid(datetime)) {
-            useDatetime = moment(useDatetime);
+            useDatetime = moment(datetime);
           } else {
             useDatetime = this.getUTCMomentIns();
           }
@@ -298,7 +298,7 @@ export default {
         } else {
           if (datetime.length !== 2) {
             if (datetime.length === 1 && this.checkDatetimeIsValid(datetime[0])) {
-              useDatetime = moment(useDatetime);
+              useDatetime = moment(datetime[0]);
             } else {
               useDatetime = this.getUTCMomentIns();
             }
@@ -325,7 +325,7 @@ export default {
       } else {
         // 非时间区间
         if (datetime && this.checkDatetimeIsValid(datetime)) {
-          useDatetime = moment(useDatetime);
+          useDatetime = moment(datetime);
         } else {
           useDatetime = this.getUTCMomentIns();
         }

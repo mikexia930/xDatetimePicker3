@@ -296,7 +296,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-/deep/ .x-single {
+:deep(.x-single) {
   color: #52575D;
   width: 236px;
   font-size: 12px;

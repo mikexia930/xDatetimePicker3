@@ -1,8 +1,6 @@
 // 导入组件
 import XDatetimePicker from './XDatetimePicker';
 
-export { XDatetimePicker };
-
 // 组件列表
 const components = [
   XDatetimePicker,
@@ -20,3 +18,5 @@ export default {
   // 导出的对象必须具有 install，才能被 Vue.use() 方法安装
   install
 };
+
+export { XDatetimePicker };

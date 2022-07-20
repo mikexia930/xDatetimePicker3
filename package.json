@@ -1,6 +1,6 @@
 {
   "name": "x-datetimepicker-vue3",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "keywords": [
     "datetime picker",
     "vue3 datetime picker"
@@ -26,8 +26,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview --port 5050",
-    "lib": "vue-cli-service build --target lib --name xdatetimepicker --dest lib packages/index.js"
+    "preview": "vite preview --port 5050"
   },
   "peerDependencies": {
     "dayjs": "^1.10.8",
